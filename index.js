@@ -52,24 +52,23 @@ const questions = [
     }
 ];
 
-// Function to write README file
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err, result) => {
-        if (err) {
-            throw err}
-        else {
-            console.log("Logo has been generated successfully.")
-        }
-    })
-}
-
 // Function to initialize
-async function init() {
+const init = async () => {
+    try {
     const inputs = await inquirer.prompt(questions)
     const finalLogo = createLogo(inputs)
-    .then((inputs) => {
-        writeToFile("genLogo.svg", createLogo(inputs))
+    
+    fs.writeFile('logoGen.svg', finalLogo, function(err) {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log('Successfully generated logoGen.svg')
+        }
     })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 // Function call to initialize app
